@@ -2,6 +2,7 @@
     "name": "laymont/laravel-pattern-repository",
     "description": "Paquete para generar repositorios en laravel",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": "^8.2"
     },
