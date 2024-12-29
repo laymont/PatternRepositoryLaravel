@@ -4,12 +4,12 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 
 interface {{ class }}
 {
-    public function all(Request $request);
+    public function all(Request $request): LengthAwarePaginator;
 
     public function getById(int $id): ?Model;
 

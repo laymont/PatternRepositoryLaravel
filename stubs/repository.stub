@@ -11,18 +11,17 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Laymont\PatternRepository\Concerns\HandlePerPageTrait;
 
 class {{ class }} implements {{ interface }}
 {
+    use HandlePerPageTrait;
+
     public function __construct(protected {{ model }} $model) {}
 
     public function all(Request $request)
     {
-        if ($request->filled('per_page') {
-            $perPage = $request->get('per_page');
-        } else {
-            $perPage = 15;
-        }
+        $perPage = $this->getPerPage($request);
 
        return $this->model->paginate($perPage)->withQueryString();
     }
