@@ -10,14 +10,20 @@ use {{ namespace }}\Interfaces\{{ interface }};
 use Illuminate\Support\Facades\Log;
 use Throwable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class {{ class }} implements {{ interface }}
 {
     public function __construct(protected {{ model }} $model) {}
 
-    public function all( $request = null)
+    public function all(Request $request)
     {
-       $perPage = $request->get('per_page', 15);
+        if ($request->filled('per_page') {
+            $perPage = $request->get('per_page');
+        } else {
+            $perPage = 15;
+        }
+
        return $this->model->paginate($perPage)->withQueryString();
     }
 
@@ -26,12 +32,13 @@ class {{ class }} implements {{ interface }}
     */
     public function getById(int $id): ?Model
     {
-        $model = $this->model::find($id);
-        if (! $model) {
-            throw new RepositoryException('Registro no encontrado.');
-        }
+        try {
+            $model = $this->model::findOrFail($id);
 
-        return $model;
+            return $model;
+        }  catch (ModelNotFoundException $e) {
+            throw new RepositoryException('Registro no encontrado.', 404, $e);
+        }
     }
 
     /**
