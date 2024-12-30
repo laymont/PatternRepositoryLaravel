@@ -3,19 +3,50 @@
 namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 
 interface {{ class }}
 {
-    public function all(Request $request);
+    /**
+    * Get all records.
+    * @return  \Illuminate\Database\Eloquent\Collection
+    */
+    public function getAll();
 
-    public function getById(int $id): ?Model;
+    **
+    * Get all records with pagination.
+    * @param  int $perPage
+    * @return  \Illuminate\Pagination\LengthAwarePaginator
+    */
+    public function getAllPaginate(int $id): LengthAwarePaginator;
 
-    public function new(array $attributes): Model;
+    /**
+    * Find a record by its id.
+    * @param int $id
+    * @return Model|null
+    */
+    public function find(mixed $id): ?Model;
 
+    /**
+    * Create a new record.
+    * @param array $data
+    * @return Model
+    */
+    public function create(array $attributes): Model;
+
+    /**
+    * Update an existing record.
+    * @param int $id
+    * @param array $data
+    * @return bool
+    */
     public function update(int $id, array $attributes): bool;
 
+    /**
+    * Delete an existing record.
+    * @param int $id
+    * @return bool
+    */
     public function delete(int $id): bool;
 }

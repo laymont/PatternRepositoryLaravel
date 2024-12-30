@@ -9,7 +9,8 @@
     "autoload": {
         "psr-4": {
             "Laymont\\PatternRepository\\": "src/",
-            "Laymont\\PatternRepository\\Exceptions\\": "src/Exceptions/"
+            "Laymont\\PatternRepository\\Exceptions\\": "src/Exceptions/",
+            "Laymont\\PatternRepository\\Concerns\\": "src/Concerns"
         }
     },
     "autoload-dev": {
