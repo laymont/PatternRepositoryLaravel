@@ -23,7 +23,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     public function register(): void
     {
         if ($this->app->environment('local', 'testing')) {
-            $this->mergeConfigFrom(__DIR__ . '/../../config/pattern-repository.php', 'pattern-repository');
+            $this->mergeConfigFrom(__DIR__.'/../../config/pattern-repository.php', 'pattern-repository');
 
             $this->app->register(ConsoleServiceProvider::class);
         }
