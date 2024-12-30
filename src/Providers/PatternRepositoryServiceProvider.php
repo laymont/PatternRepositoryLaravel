@@ -5,6 +5,7 @@ namespace Laymont\PatternRepository\Providers;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 use Laymont\PatternRepository\Console\Commands\MakeRepositoryCommand;
+use Laymont\PatternRepository\Console\Providers\ConsoleServiceProvider;
 
 class PatternRepositoryServiceProvider extends ServiceProvider
 {
@@ -21,9 +22,13 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         $this->registerCommands();
     }
 
-    public function register()
+    public function register(): void
     {
-        // Aquí puedes registrar bindings si es necesario
+        if ($this->app->environment('local', 'testing')) {
+            $this->mergeConfigFrom(__DIR__ . '/../../config/pattern-repository.php', 'pattern-repository');
+
+            $this->app->register(ConsoleServiceProvider::class);
+        }
     }
 
     /**

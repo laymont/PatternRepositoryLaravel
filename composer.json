@@ -3,14 +3,13 @@
     "description": "Paquete para generar repositorios en laravel",
     "type": "library",
     "license": "MIT",
-    "require": {
-        "php": "^8.2"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "Laymont\\PatternRepository\\": "src/",
             "Laymont\\PatternRepository\\Exceptions\\": "src/Exceptions/",
-            "Laymont\\PatternRepository\\Concerns\\": "src/Concerns"
+            "Laymont\\PatternRepository\\Concerns\\": "src/Concerns",
+            "Laymont\\PatternRepository\\Console\\Providers\\": "src/Console/Providers/"
         }
     },
     "autoload-dev": {
@@ -27,7 +26,11 @@
             ]
         }
     },
-    "require-dev": {},
+    "require-dev": {
+        "illuminate/support": "^11.0",
+        "illuminate/console": "^11.0",
+        "laravel/framework": "^11.0"
+    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
