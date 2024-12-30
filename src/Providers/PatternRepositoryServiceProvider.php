@@ -4,7 +4,6 @@ namespace Laymont\PatternRepository\Providers;
 
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
-use Laymont\PatternRepository\Console\Commands\MakeRepositoryCommand;
 use Laymont\PatternRepository\Console\Providers\ConsoleServiceProvider;
 
 class PatternRepositoryServiceProvider extends ServiceProvider
@@ -36,7 +35,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     protected function registerPublishing(): void
     {
         $this->publishes([
-            __DIR__.'/../../stubs' => base_path('stubs'),
-        ], self::PUBLISH_GROUP.'-stubs');
+            __DIR__.'/../../config/pattern-repository.php' => config_path('pattern-repository.php'),
+        ], self::PUBLISH_GROUP.'-config');
     }
 }
