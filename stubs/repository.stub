@@ -16,7 +16,7 @@ use Laymont\PatternRepository\Concerns\HandlePerPageTrait;
 class {{ class }} implements {{ interface }}
 {
     use HandlePerPageTrait;
-    
+
     /**
     * @var Model
     */
