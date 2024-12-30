@@ -17,14 +17,14 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     {
         AboutCommand::add('make:repository', static fn () => ['Version' => '1.0.0']);
 
+        // Verificar siempre la publicación y la fusión de la configuración.
+        $this->mergeConfigFrom(__DIR__.'/../config/pattern-repository.php', 'pattern-repository');
         $this->registerPublishing();
     }
 
     public function register(): void
     {
         if ($this->app->environment('local', 'testing')) {
-            $this->mergeConfigFrom(__DIR__.'/../../config/pattern-repository.php', 'pattern-repository');
-
             $this->app->register(ConsoleServiceProvider::class);
         }
     }
@@ -35,7 +35,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     protected function registerPublishing(): void
     {
         $this->publishes([
-            __DIR__.'/../../config/pattern-repository.php' => config_path('pattern-repository.php'),
+            __DIR__.'/../config/pattern-repository.php' => config_path('pattern-repository.php'),
         ], self::PUBLISH_GROUP.'-config');
     }
 }
