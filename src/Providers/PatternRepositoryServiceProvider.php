@@ -19,7 +19,6 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         AboutCommand::add('make:repository', static fn () => ['Version' => '1.0.0']);
 
         $this->registerPublishing();
-        $this->registerCommands();
     }
 
     public function register(): void
@@ -39,17 +38,5 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../stubs' => base_path('stubs'),
         ], self::PUBLISH_GROUP.'-stubs');
-    }
-
-    /**
-     *  Register the package's console commands.
-     */
-    protected function registerCommands(): void
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MakeRepositoryCommand::class,
-            ]);
-        }
     }
 }
