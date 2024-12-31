@@ -17,11 +17,6 @@ class {{ class }} implements {{ interface }}
 {
     use HandlePerPageTrait;
 
-    /**
-    * @var Model
-    */
-    protected $model;
-
     public function __construct(protected {{ model }} $model) {}
 
     /**
@@ -45,9 +40,8 @@ class {{ class }} implements {{ interface }}
     /**
     * Get all records with pagination.
     * @param  int $perPage
-    * @return  \Illuminate\Pagination\LengthAwarePaginator
     */
-    public function getAllPaginate(int $perPage): LengthAwarePaginator
+    public function getAllPaginate(int $perPage)
     {
         return $this->getModel()->paginate($this->handlePerPage($perPage))->withQueryString();
     }
