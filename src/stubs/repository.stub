@@ -2,6 +2,7 @@
 
 namespace {{ namespace }};
 
+use Illuminate\Database\Eloquent\Collection;
 use Laymont\PatternRepository\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,39 +18,25 @@ class {{ class }} implements {{ interface }}
 {
     use HandlePerPageTrait;
 
-    /**
-    * @var Model
-    */
-    protected $model;
-
     public function __construct(protected {{ model }} $model) {}
 
     /**
-    * Get the model instance.
-    * @return Model
-    */
-    public function getModel(): Model
-    {
-        return $this->model;
-    }
-
-    /**
     * Get all records.
-    * @return  \Illuminate\Database\Eloquent\Collection
+    * @return Collection
     */
-    public function getAll()
+    public function getAll(): Collection
     {
-        return $this->getModel()->all();
+        return $this->model->all();
     }
 
     /**
     * Get all records with pagination.
-    * @param  int $perPage
-    * @return  \Illuminate\Pagination\LengthAwarePaginator
+    * @param Request $request
+    * @return mixed
     */
-    public function getAllPaginate(int $perPage): LengthAwarePaginator
+    public function getAllPaginate(Request $request): mixed
     {
-        return $this->getModel()->paginate($this->handlePerPage($perPage))->withQueryString();
+        return $this->model::paginate($this->getPerPage($request))->withQueryString();
     }
 
     /**
@@ -59,22 +46,23 @@ class {{ class }} implements {{ interface }}
     */
     public function find(mixed $id): ?Model
     {
-        return $this->getModel()->findOrFail($id);
+        return $this->model::query()->findOrFail($id);
     }
 
     /**
     * Create a new record.
     * @param array $attributes
     * @return Model
+    * @throws RepositoryException
     */
-    public function new(array $attributes): Model
+    public function create(array $attributes): Model
     {
          try {
             return DB::transaction(function () use ($attributes) {
-                return $this->getModel::create($attributes);
+                return $this->model::create($attributes);
             });
         } catch (Throwable $e) {
-            Log::error('Error al crear registro {{ model }} ' , ['message' => $e->getMessage())];
+            Log::error('Error al crear registro {{ model }} ' , ['message' => $e->getMessage()]);
             throw new RepositoryException('Error al crear registro {{ model }}', 0, $e);
         }
     }
@@ -90,7 +78,7 @@ class {{ class }} implements {{ interface }}
     {
          try {
             return DB::transaction(function () use ($id, $attributes) {
-                return $this->getModel()->where('id', $id)->update($data);
+                return $this->model::query()->where('id', $id)->update($attributes);
             });
         } catch (ModelNotFoundException $e) {
             throw new RepositoryException('Registro no encontrado.', 404, $e);
@@ -109,7 +97,7 @@ class {{ class }} implements {{ interface }}
     public function delete(int $id): bool
     {
           try {
-            return (bool) $this->getModel()->destroy($id);
+            return (bool) $this->model::destroy($id);
         } catch (ModelNotFoundException $e) {
             throw new RepositoryException('Registro no encontrado.', 404, $e);
         } catch (Throwable $exception) {

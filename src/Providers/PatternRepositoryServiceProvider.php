@@ -4,7 +4,6 @@ namespace Laymont\PatternRepository\Providers;
 
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
-use Laymont\PatternRepository\Console\Commands\MakeRepositoryCommand;
 use Laymont\PatternRepository\Console\Providers\ConsoleServiceProvider;
 
 class PatternRepositoryServiceProvider extends ServiceProvider
@@ -18,15 +17,14 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     {
         AboutCommand::add('make:repository', static fn () => ['Version' => '1.0.0']);
 
+        // Verificar siempre la publicación y la fusión de la configuración.
+        $this->mergeConfigFrom(__DIR__.'/../config/pattern-repository.php', 'pattern-repository');
         $this->registerPublishing();
-        $this->registerCommands();
     }
 
     public function register(): void
     {
         if ($this->app->environment('local', 'testing')) {
-            $this->mergeConfigFrom(__DIR__ . '/../../config/pattern-repository.php', 'pattern-repository');
-
             $this->app->register(ConsoleServiceProvider::class);
         }
     }
@@ -37,19 +35,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     protected function registerPublishing(): void
     {
         $this->publishes([
-            __DIR__.'/../../stubs' => base_path('stubs'),
-        ], self::PUBLISH_GROUP.'-stubs');
-    }
-
-    /**
-     *  Register the package's console commands.
-     */
-    protected function registerCommands(): void
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MakeRepositoryCommand::class,
-            ]);
-        }
+            __DIR__.'/../config/pattern-repository.php' => config_path('pattern-repository.php'),
+        ], self::PUBLISH_GROUP.'-config');
     }
 }

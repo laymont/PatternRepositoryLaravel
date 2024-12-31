@@ -38,11 +38,15 @@ class MakeRepositoryCommand extends Command
 
     protected function createDirectories(): void
     {
-        if (! is_dir(app_path('Repositories')) && ! mkdir($concurrentDirectory = app_path('Repositories'), 0755, true) && ! is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-        }
-        if (! is_dir(app_path('Repositories/Interfaces')) && ! mkdir($concurrentDirectory = app_path('Repositories/Interfaces'), 0755, true) && ! is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        $dirs = [
+            app_path('Repositories'),
+            app_path('Repositories/Interfaces'),
+        ];
+
+        foreach ($dirs as $dir) {
+            if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+            }
         }
     }
 
@@ -81,9 +85,7 @@ class MakeRepositoryCommand extends Command
 
     protected function getDefaultNamespace(string $rootNamespace, string $typeNamespace): string
     {
-        // Elimina la parte donde añades la barra invertida extra.
         return rtrim($rootNamespace, '\\').'\\Repositories'.($typeNamespace ? '\\'.$typeNamespace : '');
-
     }
 
     protected function getStub(): string
@@ -98,6 +100,6 @@ class MakeRepositoryCommand extends Command
 
     protected function resolveStubPath(string $stub): string
     {
-        return base_path('packages/Laymont/PatternRepository/stubs/'.$stub);
+        return __DIR__ . '/../../stubs/' . $stub;
     }
 }
