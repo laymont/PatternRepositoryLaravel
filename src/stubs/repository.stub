@@ -2,6 +2,7 @@
 
 namespace {{ namespace }};
 
+use Illuminate\Database\Eloquent\Collection;
 use Laymont\PatternRepository\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,7 +22,7 @@ class {{ class }} implements {{ interface }}
 
     /**
     * Get all records.
-    * @return  \Illuminate\Database\Eloquent\Collection
+    * @return Collection
     */
     public function getAll()
     {
@@ -33,9 +34,9 @@ class {{ class }} implements {{ interface }}
     * @param Request $request
     * @return mixed
     */
-    public function getAllPaginate(Request $request)
+    public function getAllPaginate(Request $request): mixed
     {
-        return $this->model::paginate($this->getPerPage($perPage))->withQueryString();
+        return $this->model::paginate($this->getPerPage($request))->withQueryString();
     }
 
     /**

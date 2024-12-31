@@ -2,14 +2,15 @@
 
 namespace {{ namespace }};
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Http\Request;
 
 interface {{ class }}
 {
     /**
     * Get all records.
-    * @return  \Illuminate\Database\Eloquent\Collection
+    * @return Collection
     */
     public function getAll(): Collection;
 
