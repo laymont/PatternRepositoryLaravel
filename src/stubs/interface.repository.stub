@@ -17,9 +17,8 @@ interface {{ class }}
     /**
     * Get all records with pagination.
     * @param  int $perPage
-    * @return  \Illuminate\Pagination\LengthAwarePaginator
     */
-    public function getAllPaginate(int $id): LengthAwarePaginator;
+    public function getAllPaginate(int $id);
 
     /**
     * Find a record by its id.
