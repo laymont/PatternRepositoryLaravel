@@ -20,30 +20,22 @@ class {{ class }} implements {{ interface }}
     public function __construct(protected {{ model }} $model) {}
 
     /**
-    * Get the model instance.
-    * @return Model
-    */
-    public function getModel(): Model
-    {
-        return $this->model;
-    }
-
-    /**
     * Get all records.
     * @return  \Illuminate\Database\Eloquent\Collection
     */
     public function getAll()
     {
-        return $this->getModel()->all();
+        return $this->model->all();
     }
 
     /**
     * Get all records with pagination.
-    * @param  int $perPage
+    * @param Request $request
+    * @return mixed
     */
-    public function getAllPaginate(int $perPage)
+    public function getAllPaginate(Request $request)
     {
-        return $this->getModel()->paginate($this->getPerPage($perPage))->withQueryString();
+        return $this->model::paginate($this->getPerPage($perPage))->withQueryString();
     }
 
     /**
@@ -53,13 +45,14 @@ class {{ class }} implements {{ interface }}
     */
     public function find(mixed $id): ?Model
     {
-        return $this->getModel()->findOrFail($id);
+        return $this->model::query()->findOrFail($id);
     }
 
     /**
     * Create a new record.
     * @param array $attributes
     * @return Model
+    * @throws RepositoryException
     */
     public function create(array $attributes): Model
     {
@@ -68,7 +61,7 @@ class {{ class }} implements {{ interface }}
                 return $this->model::create($attributes);
             });
         } catch (Throwable $e) {
-            Log::error('Error al crear registro {{ model }} ' , ['message' => $e->getMessage())];
+            Log::error('Error al crear registro {{ model }} ' , ['message' => $e->getMessage()]);
             throw new RepositoryException('Error al crear registro {{ model }}', 0, $e);
         }
     }
@@ -84,7 +77,7 @@ class {{ class }} implements {{ interface }}
     {
          try {
             return DB::transaction(function () use ($id, $attributes) {
-                return $this->getModel()->where('id', $id)->update($attributes);
+                return $this->model::query()->where('id', $id)->update($attributes);
             });
         } catch (ModelNotFoundException $e) {
             throw new RepositoryException('Registro no encontrado.', 404, $e);
@@ -103,7 +96,7 @@ class {{ class }} implements {{ interface }}
     public function delete(int $id): bool
     {
           try {
-            return (bool) $this->getModel()->destroy($id);
+            return (bool) $this->model::destroy($id);
         } catch (ModelNotFoundException $e) {
             throw new RepositoryException('Registro no encontrado.', 404, $e);
         } catch (Throwable $exception) {
