@@ -43,7 +43,7 @@ class {{ class }} implements {{ interface }}
     */
     public function getAllPaginate(int $perPage)
     {
-        return $this->getModel()->paginate($this->handlePerPage($perPage))->withQueryString();
+        return $this->getModel()->paginate($this->getPerPage($perPage))->withQueryString();
     }
 
     /**
