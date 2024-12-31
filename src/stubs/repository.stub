@@ -24,7 +24,7 @@ class {{ class }} implements {{ interface }}
     * Get all records.
     * @return Collection
     */
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model->all();
     }
