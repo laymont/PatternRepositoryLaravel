@@ -90,16 +90,16 @@ class MakeRepositoryCommand extends Command
 
     protected function getStub(): string
     {
-        return $this->resolveStubPath('stubs/repository.stub');
+        return $this->resolveStubPath('repository.stub');
     }
 
     protected function getInterfaceStub(): string
     {
-        return $this->resolveStubPath('stubs/interface.repository.stub');
+        return $this->resolveStubPath('interface.repository.stub');
     }
 
     protected function resolveStubPath(string $stub): string
     {
-        return base_path("packages/Laymont/PatternRepository/{$stub}");
+        return __DIR__ . '/../../stubs/' . $stub;
     }
 }

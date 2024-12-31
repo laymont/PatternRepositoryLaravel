@@ -67,11 +67,11 @@ class {{ class }} implements {{ interface }}
     * @param array $attributes
     * @return Model
     */
-    public function new(array $attributes): Model
+    public function create(array $attributes): Model
     {
          try {
             return DB::transaction(function () use ($attributes) {
-                return $this->getModel::create($attributes);
+                return $this->model::create($attributes);
             });
         } catch (Throwable $e) {
             Log::error('Error al crear registro {{ model }} ' , ['message' => $e->getMessage())];
@@ -90,7 +90,7 @@ class {{ class }} implements {{ interface }}
     {
          try {
             return DB::transaction(function () use ($id, $attributes) {
-                return $this->getModel()->where('id', $id)->update($data);
+                return $this->getModel()->where('id', $id)->update($attributes);
             });
         } catch (ModelNotFoundException $e) {
             throw new RepositoryException('Registro no encontrado.', 404, $e);
