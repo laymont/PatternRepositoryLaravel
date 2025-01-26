@@ -1,9 +1,17 @@
 {
     "name": "laymont/laravel-pattern-repository",
     "description": "Paquete para generar repositorios en laravel",
+    "authors": [
+        {
+            "name": "Laymont Arratia",
+            "email": "laymont@gmail.com"
+        }
+    ],
     "type": "library",
     "license": "MIT",
-    "require": {},
+    "require": {
+        "php": "^8.2"
+    },
     "autoload": {
         "psr-4": {
             "Laymont\\PatternRepository\\": "src/",
