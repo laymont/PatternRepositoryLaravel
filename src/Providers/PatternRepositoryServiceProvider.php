@@ -34,7 +34,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         $this->app->alias(RepositoryFactory::class, 'repository.factory');
 
         // Registrar provider de comandos de consola
-        if ($this->app->environment('local', 'testing')) {
+        if ($this->app->runningInConsole()) {
             $this->app->register(ConsoleServiceProvider::class);
         }
     }
