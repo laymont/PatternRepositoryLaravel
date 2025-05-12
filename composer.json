@@ -10,14 +10,14 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^8.2"
+        "php": ">=8.2",
+        "illuminate/support": "^12.0",
+        "illuminate/console": "^12.0",
+        "laravel/framework": "^12.0"
     },
     "autoload": {
         "psr-4": {
-            "Laymont\\PatternRepository\\": "src/",
-            "Laymont\\PatternRepository\\Exceptions\\": "src/Exceptions/",
-            "Laymont\\PatternRepository\\Concerns\\": "src/Concerns",
-            "Laymont\\PatternRepository\\Console\\Providers\\": "src/Console/Providers/"
+            "Laymont\\PatternRepository\\": "src/"
         }
     },
     "autoload-dev": {
@@ -35,9 +35,9 @@
         }
     },
     "require-dev": {
-        "illuminate/support": "^11.0",
-        "illuminate/console": "^11.0",
-        "laravel/framework": "^11.0"
+        "pestphp/pest": "^3.0",
+        "phpunit/phpunit": "^11.0",
+        "mockery/mockery": "^1.6"
     },
     "config": {
         "allow-plugins": {

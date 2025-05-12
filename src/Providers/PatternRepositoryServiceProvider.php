@@ -5,6 +5,7 @@ namespace Laymont\PatternRepository\Providers;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 use Laymont\PatternRepository\Console\Providers\ConsoleServiceProvider;
+use Laymont\PatternRepository\Factories\RepositoryFactory;
 
 class PatternRepositoryServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,15 @@ class PatternRepositoryServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        // Registrar el Factory como un singleton en el contenedor
+        $this->app->singleton(RepositoryFactory::class, function ($app) {
+            return new RepositoryFactory($app);
+        });
+
+        // Crear un alias para facilitar el acceso al Factory
+        $this->app->alias(RepositoryFactory::class, 'repository.factory');
+
+        // Registrar provider de comandos de consola
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(ConsoleServiceProvider::class);
         }
@@ -37,5 +47,10 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/pattern-repository.php' => config_path('pattern-repository.php'),
         ], self::PUBLISH_GROUP.'-config');
+
+        // Publicar los stubs para permitir personalización
+        $this->publishes([
+            __DIR__.'/../stubs' => base_path('stubs/pattern-repository'),
+        ], self::PUBLISH_GROUP.'-stubs');
     }
 }

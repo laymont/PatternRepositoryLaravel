@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+
+interface {{ class }}
+{
+    /**
+    * Create a new record.
+    * @param array $attributes
+    * @return Model
+    */
+    public function create(array $attributes): Model;
+
+    /**
+    * Update an existing record.
+    * @param int $id
+    * @param array $attributes
+    * @return bool
+    */
+    public function update(int $id, array $attributes): bool;
+
+    /**
+    * Delete an existing record.
+    * @param int $id
+    * @return bool
+    */
+    public function delete(int $id): bool;
+}

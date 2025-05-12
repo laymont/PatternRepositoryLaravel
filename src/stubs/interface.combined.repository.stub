@@ -1,0 +1,12 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespace }}\{{ readableInterfaceName }};
+use {{ namespace }}\{{ writableInterfaceName }};
+
+interface {{ class }} extends {{ readableInterfaceName }}, {{ writableInterfaceName }}
+{
+    // Esta interfaz combina las capacidades de lectura y escritura
+    // sin añadir funcionalidad extra, siguiendo el principio de segregación de interfaces
+}
