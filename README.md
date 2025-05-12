@@ -18,10 +18,8 @@ El patrón repositorio actúa como una capa de abstracción entre la lógica de 
 
 ## Compatibilidad
 
-Este paquete es compatible con:
-
-*   **Laravel Framework:** `^11.0`
-*   **PHP:** `^8.1` o superior
+- **Laravel Framework:** `^12.0`
+- **PHP:** `^8.2`
 
 ## Instalación
 
@@ -252,6 +250,119 @@ class UserController extends Controller
     }
 }
 ```
+
+## Checklist de validación manual en Laravel 12
+
+1. Instala el paquete en un proyecto Laravel 12
+2. Publica los stubs (opcional)
+3. Genera un repositorio con Artisan
+4. Verifica que los archivos se generaron correctamente
+5. Usa el repositorio en un controlador
+6. Personaliza los stubs si lo deseas
+7. Prueba la funcionalidad en la aplicación
+8. Si hay errores, revisa logs y dependencias
+
+## Pruebas
+
+- Los tests unitarios incluidos solo validan la lógica interna del paquete.
+- La integración y comandos Artisan deben probarse manualmente siguiendo el checklist anterior.
+
+## Troubleshooting
+
+- Asegúrate de estar usando Laravel 12 y PHP 8.2+.
+- Si tienes problemas con la generación de archivos, revisa permisos y rutas.
+- Reporta issues en el repositorio del paquete si encuentras bugs.
+
+---
+
+Para una guía más detallada de pruebas manuales, revisa el archivo TESTING.md incluido en este repositorio.
+
+## Características avanzadas del paquete (v2+)
+
+Este paquete ahora soporta:
+
+- **Principios SOLID y SRP**: Interfaces separadas para lectura y escritura, repositorio abstracto reutilizable, y código desacoplado.
+- **Patrón Criteria**: Permite aplicar filtros reutilizables y flexibles a las consultas del repositorio.
+- **Soporte para caché**: Puedes cachear resultados de consultas en tus repositorios para mejorar el rendimiento.
+- **Factory de repositorios**: Para instanciar repositorios de manera flexible y desacoplada.
+- **Generador de código avanzado**: Usa el comando `lay:repository` con opciones para generar solo interfaces de lectura, escritura, ambas, o separadas, y para elegir estructura de carpetas (tradicional o DDD).
+
+### Ejemplo de uso del patrón Criteria
+
+```php
+use Laymont\PatternRepository\Criteria\WhereEqualsCriteria;
+use App\Repositories\UserRepository;
+
+$userRepo = app(UserRepository::class);
+$userRepo->pushCriteria(new WhereEqualsCriteria('status', 'active'));
+$users = $userRepo->getAll();
+```
+
+Puedes crear tus propios criterios implementando la interfaz `CriteriaInterface`.
+
+### Ejemplo de uso del Factory
+
+```php
+use Laymont\PatternRepository\Factories\RepositoryFactory;
+
+$factory = app(RepositoryFactory::class);
+$userRepo = $factory->make(App\Repositories\UserRepository::class);
+```
+
+### Ejemplo de repositorio cacheable
+
+```php
+use Laymont\PatternRepository\Concerns\CacheableRepository;
+
+class UserRepository extends AbstractRepository implements UserRepositoryInterface
+{
+    use CacheableRepository;
+    // ...
+    public function __construct(User $model) {
+        parent::__construct($model);
+        $this->bootCacheableRepository();
+    }
+    public function getAll(): Collection
+    {
+        return $this->cacheResult('all', fn() => parent::getAll());
+    }
+}
+```
+
+### Comando Artisan mejorado
+
+```bash
+php artisan lay:repository User --abstract --criteria --interfaces=separate --dir=domain
+```
+- `--abstract`: Usa un repositorio base abstracto.
+- `--criteria`: Habilita el patrón criteria.
+- `--interfaces=separate`: Genera interfaces separadas para lectura y escritura.
+- `--dir=domain`: Usa estructura DDD (Domain-Driven Design).
+
+### Configuración avanzada
+
+Puedes personalizar el comportamiento global en `config/pattern-repository.php`:
+
+```php
+return [
+    'namespace' => 'App\\Repositories',
+    'path' => app_path('Repositories'),
+    'structure' => 'default',
+    'use_abstract' => true,
+    'models_namespace' => 'App\\Models',
+    'default_interface_type' => 'full',
+    'use_criteria' => true,
+    'enable_cache' => false,
+    'cache_ttl' => 60,
+    'cache_tags' => ['repositories'],
+    'debug_mode' => env('APP_DEBUG', false),
+    'pagination' => [
+        'default_per_page' => 15,
+        'max_per_page' => 100,
+    ],
+];
+```
+
 ## Donaciones
 
 Si encuentras útil este paquete y deseas apoyar su desarrollo y mantenimiento, puedes considerar hacer una donación. Tu apoyo es muy apreciado y nos motiva a seguir mejorando el paquete.

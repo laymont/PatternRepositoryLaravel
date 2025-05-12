@@ -36,7 +36,9 @@ class {{ class }} implements {{ interface }}
     */
     public function getAllPaginate(Request $request): mixed
     {
-        return $this->model::newQuery()->paginate($this->getPerPage($request))->withQueryString();
+        return $this->model::newQuery()
+        ->paginate($this->getPerPage($request))
+        ->withQueryString();
     }
 
     /**

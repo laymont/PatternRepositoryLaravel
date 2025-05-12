@@ -1,0 +1,18 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\{{ model }};
+use {{ abstractNamespace }}\AbstractRepository;
+use {{ namespace }}\Interfaces\{{ interface }};
+
+class {{ class }} extends AbstractRepository implements {{ interface }}
+{
+    public function __construct({{ model }} $model)
+    {
+        parent::__construct($model);
+    }
+    
+    // Aquí puedes agregar métodos específicos para este repositorio
+    // o sobrescribir métodos del repositorio abstracto
+}
