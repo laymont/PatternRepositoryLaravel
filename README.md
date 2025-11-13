@@ -19,7 +19,7 @@ El patrón repositorio actúa como una capa de abstracción entre la lógica de 
 ## Compatibilidad
 
 - **Laravel Framework:** `^12.0`
-- **PHP:** `^8.2`
+- **PHP:** `>=8.3`
 
 ## Instalación
 
@@ -58,9 +58,9 @@ interface UserInterface
     /**
     * Find a record by its id.
     * @param int $id
-    * @return Model|null
+    * @return Model
     */
-    public function find(mixed $id): ?Model;
+    public function find(mixed $id): Model;
 
     /**
     * Create a new record.
@@ -131,9 +131,9 @@ class UserRepository implements UserInterface
     /**
     * Find a record by its id.
     * @param int $id
-    * @return Model|null
+    * @return Model
     */
-    public function find(mixed $id): ?Model
+    public function find(mixed $id): Model
     {
         return $this->model::query()->findOrFail($id);
     }
@@ -269,7 +269,7 @@ class UserController extends Controller
 
 ## Troubleshooting
 
-- Asegúrate de estar usando Laravel 12 y PHP 8.2+.
+- Asegúrate de estar usando Laravel 12 y PHP 8.3+.
 - Si tienes problemas con la generación de archivos, revisa permisos y rutas.
 - Reporta issues en el repositorio del paquete si encuentras bugs.
 

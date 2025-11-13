@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class EnhancedMakeRepositoryCommand extends Command
 {
-    protected $signature = 'lay:repository {name} {--model=} {--abstract} {--criteria} {--force}'
+    protected $signature = 'lay:repository:enhanced {name} {--model=} {--abstract} {--criteria} {--force}'
         . ' {--interfaces=full : Type of interfaces to generate (full, read, write, separate)}'
         . ' {--dir=default : Directory structure to use (default, domain)}'; 
 

@@ -18,8 +18,7 @@ class PatternRepositoryServiceProvider extends ServiceProvider
     {
         AboutCommand::add('make:repository', static fn () => ['Version' => '1.0.0']);
 
-        // Verificar siempre la publicación y la fusión de la configuración.
-        $this->mergeConfigFrom(__DIR__.'/../config/pattern-repository.php', 'pattern-repository');
+        // Registrar recursos publicables
         $this->registerPublishing();
     }
 
@@ -37,6 +36,9 @@ class PatternRepositoryServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->app->register(ConsoleServiceProvider::class);
         }
+
+        // Fusionar configuración del paquete
+        $this->mergeConfigFrom(__DIR__.'/../config/pattern-repository.php', 'pattern-repository');
     }
 
     /**
