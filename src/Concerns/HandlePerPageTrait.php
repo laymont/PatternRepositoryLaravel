@@ -14,6 +14,6 @@ trait HandlePerPageTrait
      */
     protected function getPerPage(Request $request): int
     {
-        return $request->has('per_page') ? $request->get('per_page') : 10;
+        return $request->integer('per_page', 10);
     }
 }

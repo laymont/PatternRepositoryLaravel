@@ -51,9 +51,9 @@ abstract class AbstractRepository
     /**
      * Find a record by its id.
      * @param mixed $id
-     * @return Model|null
+     * @return Model
      */
-    public function find(mixed $id): ?Model
+    public function find(mixed $id): Model
     {
         return $this->model::query()->findOrFail($id);
     }
