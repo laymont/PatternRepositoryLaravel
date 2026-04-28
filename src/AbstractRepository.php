@@ -14,21 +14,19 @@ use Laymont\PatternRepository\Concerns\CacheableRepository;
 use Laymont\PatternRepository\Exceptions\RepositoryException;
 use Throwable;
 
+/**
+ * @deprecated Use Laymont\PatternRepository\Repositories\EloquentRepository instead
+ */
 abstract class AbstractRepository
 {
     use HandlePerPageTrait, HasCriteria, CacheableRepository;
     
-    /**
-     * @param Model $model The model to work with
-     */
-    public function __construct(protected Model $model) {
+    public function __construct(
+        protected Model $model
+    ) {
         $this->bootCacheableRepository();
     }
     
-    /**
-     * Get all records.
-     * @return Collection
-     */
     public function getAll(): Collection
     {
         $query = $this->model->newQuery();
@@ -36,11 +34,6 @@ abstract class AbstractRepository
         return $query->get();
     }
 
-    /**
-     * Get all records with pagination.
-     * @param Request $request
-     * @return mixed
-     */
     public function getAllPaginate(Request $request): mixed
     {
         $query = $this->model->newQuery();
@@ -48,22 +41,11 @@ abstract class AbstractRepository
         return $query->paginate($this->getPerPage($request))->withQueryString();
     }
 
-    /**
-     * Find a record by its id.
-     * @param mixed $id
-     * @return Model
-     */
     public function find(mixed $id): Model
     {
         return $this->model::query()->findOrFail($id);
     }
 
-    /**
-     * Create a new record.
-     * @param array $attributes
-     * @return Model
-     * @throws RepositoryException
-     */
     public function create(array $attributes): Model
     {
         try {
@@ -76,13 +58,6 @@ abstract class AbstractRepository
         }
     }
 
-    /**
-     * Update an existing record.
-     * @param int $id
-     * @param array $attributes
-     * @return bool
-     * @throws RepositoryException
-     */
     public function update(int $id, array $attributes): bool
     {
         try {
@@ -97,12 +72,6 @@ abstract class AbstractRepository
         }
     }
 
-    /**
-     * Delete an existing record.
-     * @param int $id
-     * @return bool
-     * @throws RepositoryException
-     */
     public function delete(int $id): bool
     {
         try {

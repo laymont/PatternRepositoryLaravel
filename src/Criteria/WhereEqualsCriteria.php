@@ -3,6 +3,7 @@
 namespace Laymont\PatternRepository\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
+use Laymont\PatternRepository\Contracts\CriteriaInterface;
 
 class WhereEqualsCriteria implements CriteriaInterface
 {

@@ -1,6 +1,7 @@
 {
     "name": "laymont/laravel-pattern-repository",
-    "description": "Paquete para generar repositorios en laravel",
+    "description": "Laravel package for implementing the Repository Pattern with Eloquent, Criteria, and Actions support",
+    "keywords": ["laravel", "repository", "pattern", "eloquent", "criteria"],
     "authors": [
         {
             "name": "Laymont Arratia",
@@ -11,9 +12,10 @@
     "license": "MIT",
     "require": {
         "php": ">=8.3",
-        "illuminate/support": "^12.0",
-        "illuminate/console": "^12.0",
-        "laravel/framework": "^12.0"
+        "illuminate/support": "^13.0",
+        "illuminate/console": "^13.0",
+        "illuminate/database": "^13.0",
+        "laravel/framework": "^13.0"
     },
     "autoload": {
         "psr-4": {
@@ -37,7 +39,8 @@
     "require-dev": {
         "pestphp/pest": "^3.0",
         "phpunit/phpunit": "^11.0",
-        "mockery/mockery": "^1.6"
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^11.0"
     },
     "config": {
         "allow-plugins": {
