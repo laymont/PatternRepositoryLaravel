@@ -1,6 +1,7 @@
 {
     "name": "laymont/laravel-pattern-repository",
-    "description": "Paquete para generar repositorios en laravel",
+    "description": "Laravel package for implementing the Repository Pattern with Eloquent, Criteria, and Actions support",
+    "keywords": ["laravel", "repository", "pattern", "eloquent", "criteria"],
     "authors": [
         {
             "name": "Laymont Arratia",
@@ -13,6 +14,7 @@
         "php": ">=8.3",
         "illuminate/support": "^13.0",
         "illuminate/console": "^13.0",
+        "illuminate/database": "^13.0",
         "laravel/framework": "^13.0"
     },
     "autoload": {

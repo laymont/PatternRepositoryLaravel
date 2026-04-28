@@ -1,46 +1,73 @@
-# Pruebas manuales para PatternRepositoryLaravel
+# Testing Guide - PatternRepositoryLaravel v4.0.0
 
-## Checklist de validación manual en Laravel 12
+## Tests Automatizados
 
-1. **Instala el paquete en un proyecto Laravel 12**
-   ```bash
-   composer require laymont/laravel-pattern-repository:dev-main
-   ```
+Este paquete incluye **39 tests automatizados** que cubren la funcionalidad principal.
 
-2. **Publica los stubs (opcional)**
-   ```bash
-   php artisan vendor:publish --tag=laymont-pattern-repository-stubs
-   ```
+### Ejecutar Tests
 
-3. **Genera un repositorio usando el comando Artisan**
-   ```bash
-   php artisan lay:repository User --abstract --interfaces=separate --force
-   ```
+```bash
+# En el directorio del paquete
+cd packages/Laymont/PatternRepositoryLaravel
+composer install
+./vendor/bin/pest
+```
 
-4. **Verifica que los archivos se generaron**
-   - app/Repositories/UserRepository.php
-   - app/Repositories/Interfaces/UserRepositoryInterface.php
-   - app/Repositories/Interfaces/UserReadRepositoryInterface.php
-   - app/Repositories/Interfaces/UserWriteRepositoryInterface.php
+### Coverage
 
-5. **Usa el repositorio en un controlador**
-   ```php
-   use App\Repositories\UserRepository;
+Los tests cubren:
 
-   public function index(UserRepository $repo) {
-       $users = $repo->getAll();
-       // ...
-   }
-   ```
+| Componente | Tests | Descripción |
+|-----------|-------|-------------|
+| Actions | 6 | CreateAction, UpdateAction, DeleteAction |
+| EloquentRepository | 10 | find, all, paginate, create, update, delete, query |
+| Concerns | 11 | Cacheable, HasCriteria, HasEloquentScopes |
+| Contracts | 10 | Validación de interfaces |
+| Criteria | 1 | WhereEqualsCriteria |
 
-6. **Personaliza los stubs publicados si lo deseas**
-   - Edita los archivos en stubs/pattern-repository
+### Configuración de Tests
 
-7. **Prueba la funcionalidad en la aplicación**
-   - Accede a rutas/controladores que usen el repositorio generado.
-   - Verifica que no hay errores y que los métodos funcionan.
+- **PHPUnit/Pest**: v11+
+- **Database**: SQLite en memoria
+- **Testbench**: Orchestra Testbench v11
 
-8. **Solución de problemas**
-   - Si falla algún paso, revisa los logs de Laravel y la consola.
-   - Asegúrate de estar en Laravel 12 y PHP 8.2+.
-   - Reporta issues en el repositorio del paquete.
+### Estructura de Tests
+
+```
+tests/
+├── TestCase.php              # Base test case con SQLite
+├── TestModel.php           # Modelo de prueba
+└── Unit/
+    ├── Actions/
+    │   └── ActionsTest.php
+    ├── Concerns/
+    │   ├── CacheableTest.php
+    │   ├── HasCriteriaTest.php
+    │   └── HasEloquentScopesTest.php
+    ├── Contracts/
+    │   └── ContractsTest.php
+    ├── Repositories/
+    │   └── EloquentRepositoryTest.php
+    ├── AbstractRepositoryTest.php
+    └── WhereEqualsCriteriaTest.php
+```
+
+## Tests Manuales (opcional)
+
+Aún puedes hacer validación manual en un proyecto Laravel:
+
+```bash
+# Instalar paquete
+composer require laymont/pattern-repository-laravel:dev-feature/v4-tests-and-laravel-13
+
+# Generar repositorio
+php artisan make:repository User
+
+# Probar en controlador
+```
+
+## Troubleshooting
+
+- Asegúrate de tener PHP 8.3+
+- Laravel 13 instalado
+- Ejecute `composer update` después de cambios en dependencies
