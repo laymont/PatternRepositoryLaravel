@@ -4,6 +4,7 @@ namespace Laymont\PatternRepository\Concerns;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Config\Repository as ConfigRepository;
@@ -40,10 +41,10 @@ trait CacheableRepository
         $this->cacheTtl = $config->get('pattern-repository.cache_ttl', 60);
         $this->cacheTags = $config->get('pattern-repository.cache_tags', ['repositories']);
         
-        // Au00f1adir un prefijo basado en el nombre del modelo
+        // Añadir un prefijo basado en el nombre del modelo
         if (isset($this->model)) {
             $modelClass = get_class($this->model);
-            $this->cachePrefix = strtolower(class_basename($modelClass));
+            $this->cachePrefix = strtolower(Str::afterLast($modelClass, '\\'));
             $this->cacheTags[] = $this->cachePrefix;
         }
     }

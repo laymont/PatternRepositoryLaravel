@@ -3,6 +3,7 @@
 namespace Laymont\PatternRepository\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
+use Laymont\PatternRepository\Contracts\CriteriaInterface;
 
 class SearchWhereLikeCriteria implements CriteriaInterface
 {
@@ -10,7 +11,7 @@ class SearchWhereLikeCriteria implements CriteriaInterface
      * SearchWhereLikeCriteria constructor.
      * 
      * @param string|array $columns Las columnas para buscar
-     * @param string $searchTerm El tu00e9rmino de bu00fasqueda
+     * @param string $searchTerm El término de búsqueda
      * @param string $boolean El operador booleano a usar (and/or)
      */
     public function __construct(
@@ -35,6 +36,6 @@ class SearchWhereLikeCriteria implements CriteriaInterface
                 $method = $index === 0 ? 'where' : 'orWhere';
                 $query->{$method}($column, 'LIKE', $searchTerm);
             }
-        }, null, null, $this->boolean);
+        });
     }
 }

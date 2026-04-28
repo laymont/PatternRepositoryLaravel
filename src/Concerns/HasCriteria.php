@@ -3,7 +3,7 @@
 namespace Laymont\PatternRepository\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
-use Laymont\PatternRepository\Criteria\CriteriaInterface;
+use Laymont\PatternRepository\Contracts\CriteriaInterface;
 
 trait HasCriteria
 {
@@ -11,11 +11,8 @@ trait HasCriteria
 
     /**
      * Add a criteria to the repository.
-     *
-     * @param CriteriaInterface $criteria
-     * @return self
      */
-    public function pushCriteria(CriteriaInterface $criteria): self
+    public function pushCriteria(CriteriaInterface $criteria): static
     {
         $this->criteria[] = $criteria;
         return $this;
@@ -23,10 +20,8 @@ trait HasCriteria
 
     /**
      * Reset all criteria.
-     *
-     * @return self
      */
-    public function resetCriteria(): self
+    public function resetCriteria(): static
     {
         $this->criteria = [];
         return $this;
@@ -34,9 +29,6 @@ trait HasCriteria
 
     /**
      * Apply all stored criteria to the query builder.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     protected function applyCriteria(Builder $query): Builder
     {

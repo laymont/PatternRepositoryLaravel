@@ -3,14 +3,12 @@
 namespace Laymont\PatternRepository\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
+use Laymont\PatternRepository\Contracts\CriteriaInterface as BaseCriteriaInterface;
 
-interface CriteriaInterface
+interface CriteriaInterface extends BaseCriteriaInterface
 {
     /**
      * Apply the criteria to the given query builder.
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function apply(Builder $query): Builder;
 }
