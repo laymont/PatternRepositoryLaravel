@@ -231,6 +231,21 @@ Para una guía detallada, consulta el archivo TESTING.md.
 4. Sube: `git push origin feature/nueva-funcionalidad`.
 5. Abre un Pull Request.
 
+## Donaciones
+
+Si encuentras útil este paquete y deseas apoyar su desarrollo y mantenimiento, puedes considerar hacer una donación.
+
+### Zinli
+
+- **ID de usuario:** 3-002-58546608-36
+- **Recargar:** https://recargas.zinli.com/4nVRQUniFdK8DBfPzzfyzR
+
+### Visa Prepagada Zinli
+
+- **Número:** 4850460061276928
+
+¡Gracias por tu apoyo!
+
 ## Licencia
 
 MIT License. Ver LICENSE para más detalles.
