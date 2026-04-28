@@ -244,6 +244,10 @@ Si encuentras útil este paquete y deseas apoyar su desarrollo y mantenimiento, 
 
 - **Número:** 4850460061276928
 
+### Binance Pay
+
+- **Binance Pay ID:** 206414132
+
 ¡Gracias por tu apoyo!
 
 ## Licencia
