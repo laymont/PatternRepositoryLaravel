@@ -37,7 +37,6 @@ Todas las modificaciones relevantes de este paquete se documentarán en este arc
 ### Notas
 - Breaking change: Laravel 13 requerido
 - Tests ahora son automatizados (antes solo validación manual)
-- Package renombrado a: `laymont/pattern-repository-laravel`
 
 ---
 
